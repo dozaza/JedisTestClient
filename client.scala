@@ -10,12 +10,14 @@ import redis.clients.jedis.{Jedis, JedisPoolConfig, JedisPool}
 object client {
 
   def main(args: Array[String]) {
-    val pool: JedisPool = new JedisPool(new JedisPoolConfig(), "10.20.112.103", 6379)
 
-    val jedis: Jedis = pool.getResource
+    val myThread = new MyThread
+    val t = new Thread(myThread)
+    t.start()
 
-    val listener = new MyListener
-
-    jedis.subscribe(listener, "future")
+    while(true) {
+      println("main thread")
+      Thread.sleep(3000)
+    }
   }
 }
